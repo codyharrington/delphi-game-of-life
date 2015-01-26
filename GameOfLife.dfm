@@ -1,9 +1,9 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
-  Caption = 'MainForm'
-  ClientHeight = 445
-  ClientWidth = 758
+  Caption = 'Conway'#39's Game of Life'
+  ClientHeight = 453
+  ClientWidth = 785
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
@@ -16,20 +16,22 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (
-    758
-    445)
+    785
+    453)
   PixelsPerInch = 96
   TextHeight = 13
   object MainGrid: TDrawGrid
     AlignWithMargins = True
     Left = 0
     Top = 0
-    Width = 758
-    Height = 429
+    Width = 785
+    Height = 393
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelInner = bvNone
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
+    DefaultDrawing = False
+    Enabled = False
     FixedCols = 0
     FixedRows = 0
     ParentBiDiMode = False
@@ -38,15 +40,68 @@ object MainForm: TMainForm
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 426
-    Width = 758
-    Height = 19
+    Top = 424
+    Width = 785
+    Height = 29
     Panels = <>
     SimplePanel = True
-    ExplicitWidth = 751
   end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
+  object ButtonPanel: TPanel
+    Left = 0
+    Top = 387
+    Width = 785
+    Height = 41
+    Anchors = [akLeft, akRight, akBottom]
+    TabOrder = 2
+    object PeriodLabel: TLabel
+      Left = 272
+      Top = 12
+      Width = 54
+      Height = 13
+      Caption = 'Period (ms)'
+    end
+    object StartButton: TButton
+      Left = 8
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Start'
+      TabOrder = 0
+      OnClick = StartButtonClick
+    end
+    object PauseButton: TButton
+      Left = 89
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Pause'
+      TabOrder = 1
+      OnClick = PauseButtonClick
+    end
+    object TimeDurationSpinEdit: TSpinEdit
+      Left = 332
+      Top = 8
+      Width = 121
+      Height = 23
+      MaxValue = 3000
+      MinValue = 1
+      TabOrder = 2
+      Value = 500
+    end
+    object ResetButton: TButton
+      Left = 170
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Reset'
+      TabOrder = 3
+      OnClick = ResetButtonClick
+    end
+  end
+  object PeriodTimer: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = PeriodTimerTimer
     Left = 632
     Top = 48
   end
