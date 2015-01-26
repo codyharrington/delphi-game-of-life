@@ -3,7 +3,7 @@ program DelphiGameOfLife;
 uses
   Vcl.Forms,
   GameOfLife in 'GameOfLife.pas' {MainForm},
-  DrawingUtils in 'DrawingUtils.pas';
+  GameOfLifeUtils in 'GameOfLifeUtils.pas';
 
 {$R *.res}
 

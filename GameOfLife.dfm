@@ -23,9 +23,9 @@ object MainForm: TMainForm
   object MainGrid: TDrawGrid
     AlignWithMargins = True
     Left = 0
-    Top = -2
+    Top = 0
     Width = 758
-    Height = 431
+    Height = 429
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelInner = bvNone
     BevelOuter = bvNone

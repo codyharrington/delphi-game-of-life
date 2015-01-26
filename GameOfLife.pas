@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ExtCtrls, DrawingUtils,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ExtCtrls, GameOfLifeUtils,
   Vcl.ComCtrls;
 
 type
@@ -19,7 +19,7 @@ type
   private
     { Private declarations }
   public
-    property Cells: Array of Array of TAutomataCell;
+    Cells: TAutomataCellArray;
     { Public declarations }
   end;
 
@@ -31,10 +31,11 @@ implementation
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var
+  Cols: Integer;
 begin
-  SetLength(Cells, MainGrid.RowCount, MainGrid.ColCount);
-
-  TDrawingUtils.ResizeGrid(MainForm, MainGrid);
+  TGameOfLifeUtils.ResizeGrid(MainForm, MainGrid);
+  TGameOfLifeUtils.PopulateCellArray(MainGrid, Cells);
 
   MainGrid.Canvas.Brush.Color := clBlack;
   Timer1.Interval := 1000;
@@ -42,7 +43,8 @@ end;
 
 procedure TMainForm.FormResize(Sender: TObject);
 begin
-  TDrawingUtils.ResizeGrid(MainForm, MainGrid);
+  TGameOfLifeUtils.ResizeGrid(MainForm, MainGrid);
+  TGameOfLifeUtils.PopulateCellArray(MainGrid, Cells);
 end;
 
 procedure TMainForm.MainGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
@@ -55,9 +57,19 @@ begin
 end;
 
 procedure TMainForm.Timer1Timer(Sender: TObject);
+var
+  Row, Col: Integer;
+  CellIsAlive: Boolean;
 begin
   // Check the cell array then redraw the grid based on this
-  raise Exception.Create('Not Implemented');
+  for Row := 0 to MainGrid.RowCount - 1 do
+    for Col := 0 to MainGrid.ColCount - 1 do
+      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, MainForm.Cells, MainForm.Cells[Row, Col]);
+      MainForm.Cells[Row, Col].IsAlive := CellIsAlive;
+      if CellIsAlive then
+      begin
+        // Paint cell here
+      end;
 end;
 
 end.
