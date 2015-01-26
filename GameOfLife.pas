@@ -56,7 +56,8 @@ end;
 
 procedure TMainForm.Timer1Timer(Sender: TObject);
 begin
-  TDrawingUtils.UpdateCellGrid(MainGrid);
+  // Check the cell array then redraw the grid based on this
+  raise Exception.Create('Not Implemented');
 end;
 
 end.

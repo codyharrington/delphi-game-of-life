@@ -3,7 +3,7 @@ unit DrawingUtils;
 interface
 
 uses
-  Vcl.Grids, Vcl.Forms, Vcl.Dialogs, SysUtils;
+  Vcl.Grids, Vcl.Forms, Vcl.Dialogs, SysUtils, Math;
 
 type
   TAutomataCell = Record
@@ -13,9 +13,9 @@ type
 
   TDrawingUtils = class
     class procedure ResizeGrid(MainForm: TForm; MainGrid: TDrawGrid);
-    class procedure UpdateCellGrid(MainGrid: TDrawGrid);
-    class function StaysAlive(Cells: Array of TAutomataCell; CurrentCell: TAutomataCell): Boolean;
-    class procedure CheckBoard(Cells: Array of TAutomataCell);
+    class procedure PopulateCellArray(var Cells: Array of TAutomataCell);
+    class function StaysAlive(MainGrid: TDrawGrid; Cells: Array of TAutomataCell; CurrentCell: TAutomataCell): Boolean;
+    class procedure UpdateCells(MainGrid: TDrawGrid; var Cells: Array of TAutomataCell);
   end;
 
 implementation
@@ -26,24 +26,28 @@ begin
   MainGrid.RowCount := Round(MainForm.Height / MainGrid.DefaultRowHeight);
 end;
 
-class procedure TDrawingUtils.UpdateCellGrid(MainGrid: TDrawGrid);
+class procedure TDrawingUtils.PopulateCellArray(var Cells: Array of TAutomataCell);
 begin
   raise Exception.Create('Not Implemented');
 end;
 
-class function TDrawingUtils.StaysAlive(Cells: Array of TAutomataCell; CurrentCell: TAutomataCell): Boolean;
+class function TDrawingUtils.StaysAlive(MainGrid: TDrawGrid; Cells: Array of TAutomataCell; CurrentCell: TAutomataCell): Boolean;
 var
-  Col, Row, x, y, LiveCount: Integer;
+  Col, Row, _Col, _Row, x, y, LiveCount: Integer;
 begin
   x := CurrentCell.Pos.x;
   y := CurrentCell.Pos.y;
   LiveCount := 0;
 
-  for Col := (x - 1) to (x + 1) do
+  for _Col := (x - 1) to (x + 1) do
   begin
-    for Row := (y - 1) to (y + 1) do
+    Col := Max(0, Min(MainGrid.ColCount - 1, _Col));
+
+    for _Row := (y - 1) to (y + 1) do
     begin
-      if (Col <> x) and (x >= 0) and (Row <> y) and (y >= 0) then
+      Row := Max(0, Min(MainGrid.RowCount - 1, _Row));
+
+      if (Col <> x) and (Row <> y) then
       begin
         if Cells[Row, Col].IsAlive then
           LiveCount := LiveCount + 1;
@@ -62,9 +66,11 @@ begin
     Result := True
 end;
 
-class procedure TDrawingUtils.CheckBoard(Cells: Array of TAutomataCell);
+class procedure TDrawingUtils.UpdateCells(MainGrid: TDrawGrid; var Cells: Array of TAutomataCell);
+var
+  Row, Col: Integer;
 begin
-  raise Exception.Create('Not implemented Error');
+    raise Exception.Create('Not implemented Error');
 end;
 
 end.

@@ -23,13 +23,15 @@ object MainForm: TMainForm
   object MainGrid: TDrawGrid
     AlignWithMargins = True
     Left = 0
-    Top = 0
+    Top = -2
     Width = 758
     Height = 431
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelInner = bvNone
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
+    FixedCols = 0
+    FixedRows = 0
     ParentBiDiMode = False
     TabOrder = 0
     OnDrawCell = MainGridDrawCell
