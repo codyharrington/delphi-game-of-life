@@ -25,12 +25,23 @@ object MainForm: TMainForm
     Left = 0
     Top = 0
     Width = 745
-    Height = 447
+    Height = 425
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelInner = bvNone
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
     ParentBiDiMode = False
     TabOrder = 0
+    OnSelectCell = MainGridSelectCell
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 423
+    Width = 744
+    Height = 19
+    Panels = <>
+    SimplePanel = True
+    ExplicitLeft = 224
+    ExplicitTop = 431
   end
 end
