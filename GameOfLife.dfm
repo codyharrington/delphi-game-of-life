@@ -31,12 +31,12 @@ object MainForm: TMainForm
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
     DefaultDrawing = False
-    Enabled = False
     FixedCols = 0
     FixedRows = 0
     ParentBiDiMode = False
     TabOrder = 0
     OnDrawCell = MainGridDrawCell
+    OnSelectCell = MainGridSelectCell
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -54,7 +54,7 @@ object MainForm: TMainForm
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 2
     object PeriodLabel: TLabel
-      Left = 272
+      Left = 368
       Top = 12
       Width = 54
       Height = 13
@@ -79,23 +79,32 @@ object MainForm: TMainForm
       OnClick = PauseButtonClick
     end
     object TimeDurationSpinEdit: TSpinEdit
-      Left = 332
+      Left = 436
       Top = 8
       Width = 121
-      Height = 23
+      Height = 22
       MaxValue = 3000
       MinValue = 1
       TabOrder = 2
       Value = 500
     end
-    object ResetButton: TButton
+    object RandomiseButton: TButton
       Left = 170
       Top = 6
       Width = 75
       Height = 25
-      Caption = 'Reset'
+      Caption = 'Randomise'
       TabOrder = 3
-      OnClick = ResetButtonClick
+      OnClick = RandomiseButtonClick
+    end
+    object ClearButton: TButton
+      Left = 251
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Clear'
+      TabOrder = 4
+      OnClick = ClearButtonClick
     end
   end
   object PeriodTimer: TTimer

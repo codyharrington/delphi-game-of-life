@@ -3,7 +3,7 @@ unit GameOfLifeUtils;
 interface
 
 uses
-  Vcl.Grids, Vcl.Forms, Vcl.Dialogs, SysUtils, Math;
+  Vcl.Grids, Vcl.Forms, Vcl.Dialogs, SysUtils, Vcl.Graphics, Math;
 
 type
   TAutomataCell = Record
@@ -17,6 +17,7 @@ type
     class procedure ResizeGrid(MainForm: TForm; MainGrid: TDrawGrid);
     class procedure PopulateCellArray(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
     class function StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; CurrentCell: TAutomataCell): Boolean;
+    class procedure GenocideCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
   end;
 
 implementation
@@ -91,6 +92,21 @@ begin
     Result := True
   else
     Result := False
+end;
+
+class procedure TGameOfLifeUtils.GenocideCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
+var
+  Col, Row: Integer;
+begin
+  for Row := 0 to MainGrid.RowCount - 1 do
+  begin
+    for Col := 0 to MainGrid.ColCount - 1 do
+    begin
+      Cells[Row, Col].IsAlive := False;
+      MainGrid.Canvas.Brush.Color := clWhite;
+      MainGrid.Canvas.FillRect(MainGrid.CellRect(Col, Row));
+    end;
+  end;
 end;
 
 end.
