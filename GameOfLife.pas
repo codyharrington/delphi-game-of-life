@@ -53,13 +53,19 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   TGameOfLifeUtils.ResizeGrid(MainForm, MainGrid);
   TGameOfLifeUtils.PopulateCellArray(MainGrid, Cells);
+  TGameOfLifeUtils.RandomiseCells(MainGrid, Cells);
   PeriodTimer.Interval := TimeDurationSpinEdit.Value;
 end;
 
 procedure TMainForm.FormResize(Sender: TObject);
+var
+  TimerState: Boolean;
 begin
+  TimerState := PeriodTimer.Enabled;
+  PeriodTimer.Enabled := False;
   TGameOfLifeUtils.ResizeGrid(MainForm, MainGrid);
   TGameOfLifeUtils.PopulateCellArray(MainGrid, Cells);
+  PeriodTimer.Enabled := TimerState;
 end;
 
 procedure TMainForm.MainGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
@@ -103,7 +109,7 @@ end;
 
 procedure TMainForm.RandomiseButtonClick(Sender: TObject);
 begin
-  TGameOfLifeUtils.PopulateCellArray(MainGrid, Cells);
+  TGameOfLifeUtils.RandomiseCells(MainGrid, Cells);
   MainGrid.Repaint;
 end;
 
@@ -128,7 +134,7 @@ begin
   begin
     for Col := 0 to MainGrid.ColCount - 1 do
     begin
-      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, CellArrayCopy, CellArrayCopy[Row, Col]);
+      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, CellArrayCopy, Row, Col);
       MainForm.Cells[Row, Col].IsAlive := CellIsAlive;
       if CellIsAlive then
         AliveCount := AliveCount + 1;

@@ -8,7 +8,6 @@ uses
 type
   TAutomataCell = Record
     IsAlive: Boolean;
-    Pos: TGridCoord;
   End;
 
   TAutomataCellArray = Array of Array of TAutomataCell;
@@ -16,8 +15,9 @@ type
   TGameOfLifeUtils = class
     class procedure ResizeGrid(MainForm: TForm; MainGrid: TDrawGrid);
     class procedure PopulateCellArray(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
-    class function StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; CurrentCell: TAutomataCell): Boolean;
+    class function StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
     class procedure GenocideCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
+    class procedure RandomiseCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
   end;
 
 implementation
@@ -37,32 +37,14 @@ begin
 
   for Row := 0 to MainGrid.RowCount - 1 do
     SetLength(Cells[Row], MainGrid.ColCount);
-
-  for Row := 0 to MainGrid.RowCount - 1 do
-  begin
-    for Col := 0 to MainGrid.ColCount - 1 do
-    begin
-      Cells[Row, Col].Pos.X := Col;
-      Cells[Row, Col].Pos.Y := Row;
-      Rand := Random(2);
-      case Rand of
-        0:
-          Cells[Row, Col].IsAlive := False;
-        1:
-          Cells[Row, Col].IsAlive := True;
-      end;
-    end;
-  end;
 end;
 
-class function TGameOfLifeUtils.StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; CurrentCell: TAutomataCell): Boolean;
+class function TGameOfLifeUtils.StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
 var
-  Col, Row, X, Y, XMin, XMax, YMin, YMax, LiveNeighbourCount: Integer;
+  Col, Row, XMin, XMax, YMin, YMax, LiveNeighbourCount: Integer;
   CurrentlyAlive: Boolean;
 begin
-  X := CurrentCell.Pos.X;
-  Y := CurrentCell.Pos.Y;
-  CurrentlyAlive := CurrentCell.IsAlive;
+  CurrentlyAlive := Cells[Y, X].IsAlive;
   LiveNeighbourCount := 0;
 
   XMin := Max(0, X - 1);
@@ -92,6 +74,8 @@ begin
       begin
         if LiveNeighbourCount < 2 then
           Result := False
+        else if LiveNeighbourCount > 3 then
+          Result := False
         else
           Result := True
       end;
@@ -116,6 +100,25 @@ begin
       Cells[Row, Col].IsAlive := False;
       MainGrid.Canvas.Brush.Color := clWhite;
       MainGrid.Canvas.FillRect(MainGrid.CellRect(Col, Row));
+    end;
+  end;
+end;
+
+class procedure TGameOfLifeUtils.RandomiseCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
+var
+  Col, Row, Rand: Integer;
+begin
+  for Row := 0 to MainGrid.RowCount - 1 do
+  begin
+    for Col := 0 to MainGrid.ColCount - 1 do
+    begin
+      Rand := Random(2);
+      case Rand of
+        0:
+          Cells[Row, Col].IsAlive := False;
+        1:
+          Cells[Row, Col].IsAlive := True;
+      end;
     end;
   end;
 end;
