@@ -1,5 +1,5 @@
 __history
-Win32
 *.res
 *.identcache
 *.local
+*~
