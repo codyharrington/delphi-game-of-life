@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ExtCtrls, GameOfLifeUtils,
-  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Samples.Spin;
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Samples.Spin, Math;
 
 type
   TMainForm = class(TForm)
@@ -124,7 +124,7 @@ var
   CellIsAlive: Boolean;
   CellArrayCopy: TAutomataCellArray;
 begin
-  PeriodTimer.Interval := TimeDurationSpinEdit.Value;
+  PeriodTimer.Interval := Max(1, TimeDurationSpinEdit.Value);
   AliveCount := 0;
   DeadCount := 0;
   TotalCount := MainGrid.RowCount * MainGrid.ColCount;
