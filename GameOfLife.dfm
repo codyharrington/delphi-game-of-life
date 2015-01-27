@@ -30,10 +30,13 @@ object MainForm: TMainForm
     BevelInner = bvNone
     BevelOuter = bvNone
     BiDiMode = bdLeftToRight
+    DefaultColWidth = 20
+    DefaultRowHeight = 20
     DefaultDrawing = False
     FixedCols = 0
     FixedRows = 0
     ParentBiDiMode = False
+    ScrollBars = ssNone
     TabOrder = 0
     OnDrawCell = MainGridDrawCell
     OnSelectCell = MainGridSelectCell
@@ -86,7 +89,7 @@ object MainForm: TMainForm
       MaxValue = 3000
       MinValue = 1
       TabOrder = 2
-      Value = 500
+      Value = 100
     end
     object RandomiseButton: TButton
       Left = 170

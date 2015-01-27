@@ -57,7 +57,7 @@ end;
 
 class function TGameOfLifeUtils.StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; CurrentCell: TAutomataCell): Boolean;
 var
-  Col, Row, _Col, _Row, X, Y, LiveNeighbourCount: Integer;
+  Col, Row, X, Y, XMin, XMax, YMin, YMax, LiveNeighbourCount: Integer;
   CurrentlyAlive: Boolean;
 begin
   X := CurrentCell.Pos.X;
@@ -65,13 +65,16 @@ begin
   CurrentlyAlive := CurrentCell.IsAlive;
   LiveNeighbourCount := 0;
 
-  for _Col := (X - 1) to (X + 2) do
+  XMin := Max(0, X - 1);
+  XMax := Min(X + 1, MainGrid.ColCount - 1);
+  YMin := Max(0, Y - 1);
+  YMax := Min(Y + 1, MainGrid.RowCount - 1);
+
+  for Row := YMin to YMax do
   begin
-    Col := Max(0, Min(MainGrid.ColCount - 1, _Col));
-    for _Row := (Y - 1) to (Y + 2) do
+    for Col := XMin to XMax do
     begin
-      Row := Max(0, Min(MainGrid.RowCount - 1, _Row));
-      if (Col <> X) and (Row <> Y) then
+      if (Row <> Y) or (Col <> X) then
       begin
         if Cells[Row, Col].IsAlive then
           LiveNeighbourCount := LiveNeighbourCount + 1;
@@ -84,14 +87,22 @@ begin
     end;
   end;
 
-  if CurrentlyAlive and (LiveNeighbourCount < 2) then
-    Result := False
-  else if CurrentlyAlive and (LiveNeighbourCount <= 3) then
-    Result := True
-  else if not CurrentlyAlive and (LiveNeighbourCount = 3) then
-    Result := True
-  else
-    Result := False
+  case CurrentlyAlive of
+    True:
+      begin
+        if LiveNeighbourCount < 2 then
+          Result := False
+        else
+          Result := True
+      end;
+    False:
+      begin
+        if LiveNeighbourCount = 3 then
+          Result := True
+        else
+          Result := False
+      end;
+  end;
 end;
 
 class procedure TGameOfLifeUtils.GenocideCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);

@@ -116,17 +116,19 @@ procedure TMainForm.PeriodTimerTimer(Sender: TObject);
 var
   Row, Col, AliveCount, DeadCount, TotalCount: Integer;
   CellIsAlive: Boolean;
+  CellArrayCopy: TAutomataCellArray;
 begin
   PeriodTimer.Interval := TimeDurationSpinEdit.Value;
   AliveCount := 0;
   DeadCount := 0;
   TotalCount := MainGrid.RowCount * MainGrid.ColCount;
+  CellArrayCopy := Copy(MainForm.Cells);
 
   for Row := 0 to MainGrid.RowCount - 1 do
   begin
     for Col := 0 to MainGrid.ColCount - 1 do
     begin
-      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, MainForm.Cells, MainForm.Cells[Row, Col]);
+      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, CellArrayCopy, CellArrayCopy[Row, Col]);
       MainForm.Cells[Row, Col].IsAlive := CellIsAlive;
       if CellIsAlive then
         AliveCount := AliveCount + 1;
