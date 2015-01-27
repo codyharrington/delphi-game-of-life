@@ -132,9 +132,10 @@ begin
 
   for Row := 0 to MainGrid.RowCount - 1 do
   begin
+    CellArrayCopy[Row] := Copy(MainForm.Cells[Row]);
     for Col := 0 to MainGrid.ColCount - 1 do
     begin
-      CellIsAlive := TGameOfLifeUtils.StaysAlive(MainGrid, CellArrayCopy, Row, Col);
+      CellIsAlive := TGameOfLifeUtils.IsAliveNextStep(MainGrid, CellArrayCopy, Row, Col);
       MainForm.Cells[Row, Col].IsAlive := CellIsAlive;
       if CellIsAlive then
         AliveCount := AliveCount + 1;

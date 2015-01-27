@@ -15,7 +15,7 @@ type
   TGameOfLifeUtils = class
     class procedure ResizeGrid(MainForm: TForm; MainGrid: TDrawGrid);
     class procedure PopulateCellArray(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
-    class function StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
+    class function IsAliveNextStep(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
     class procedure GenocideCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
     class procedure RandomiseCells(MainGrid: TDrawGrid; var Cells: TAutomataCellArray);
   end;
@@ -39,7 +39,7 @@ begin
     SetLength(Cells[Row], MainGrid.ColCount);
 end;
 
-class function TGameOfLifeUtils.StaysAlive(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
+class function TGameOfLifeUtils.IsAliveNextStep(MainGrid: TDrawGrid; Cells: TAutomataCellArray; Y, X: Integer): Boolean;
 var
   Col, Row, XMin, XMax, YMin, YMax, LiveNeighbourCount: Integer;
   CurrentlyAlive: Boolean;
