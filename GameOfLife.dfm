@@ -1,9 +1,10 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
+  Width = 810
+  Height = 491
+  AutoScroll = True
   Caption = 'Conway'#39's Game of Life'
-  ClientHeight = 453
-  ClientWidth = 785
   Color = clBtnFace
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
@@ -16,7 +17,7 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (
-    785
+    794
     453)
   PixelsPerInch = 96
   TextHeight = 13
@@ -24,19 +25,18 @@ object MainForm: TMainForm
     AlignWithMargins = True
     Left = 0
     Top = 0
-    Width = 785
-    Height = 393
+    Width = 794
+    Height = 387
     Anchors = [akLeft, akTop, akRight, akBottom]
-    BevelInner = bvNone
-    BevelOuter = bvNone
     BiDiMode = bdLeftToRight
     DefaultColWidth = 20
     DefaultRowHeight = 20
     DefaultDrawing = False
+    DoubleBuffered = False
     FixedCols = 0
     FixedRows = 0
     ParentBiDiMode = False
-    ScrollBars = ssNone
+    ParentDoubleBuffered = False
     TabOrder = 0
     OnDrawCell = MainGridDrawCell
     OnSelectCell = MainGridSelectCell
@@ -44,18 +44,20 @@ object MainForm: TMainForm
   object StatusBar1: TStatusBar
     Left = 0
     Top = 424
-    Width = 785
+    Width = 794
     Height = 29
     Panels = <>
     SimplePanel = True
+    ExplicitWidth = 785
   end
   object ButtonPanel: TPanel
     Left = 0
     Top = 387
-    Width = 785
+    Width = 794
     Height = 41
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 2
+    ExplicitWidth = 785
     object PeriodLabel: TLabel
       Left = 368
       Top = 12
